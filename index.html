@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="bootstrap-5.2.2-dist/css/bootstrap.css">
+    <script src="bootstrap-5.2.2-dist/js/bootstrap.bundle.js"></script>
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css"> -->
+    <link rel="stylesheet" href="TodoPro.css">
+    <title>Document</title>
+</head>
+<body>
+                                        <!-- MODAL -->
+    <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Add details</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <input type="text" class="form-control" id="inputTodo" placeholder="ex: Wash plate...">
+                  </div>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-primary"  data-bs-toggle="modal" onclick="addTodo()">Proceed to add</button>
+            </div>
+          </div>
+        </div>
+    </div>
+     <!--REPLACEMENT MODAL -->
+
+     <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel1" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalToggleLabel1">Change to</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <div class="mb-3">
+                  <input type="text" class="form-control" id="editTodoInput" placeholder="ex: Wash plate...">
+                </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-primary"  data-bs-toggle="modal" onclick="editTodo()">Change</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div id="parentContainer" class="">
+        <div  id="title" class="container-fluid pt-3 pb-2 shadow-sm">
+          <a href="#" class="notification">
+            <span class="display-5">MY TODOs</span>
+            <span id="dispTotal" class="badge"></span>
+          </a>
+        </div>
+
+        <div id="searchInp" class="container-fluid">
+            <form class="example" action="">
+              <input class="form-control h-50 border" id="searchInput" type="text" placeholder="Search TODOs" name="search">
+              <button class="bg-warning border p-1" type="submit"><img src="Icons/search-rounded.svg" alt="" width="34px"></button>
+            </form>
+        </div>
+
+            <center><span id="welcome" class="">Your TODOs appear here!</span></center>
+            <div id="disp" class="my-3">
+        </div>
+
+        <center class="plus container-fluid" type="button">
+            <a href=""  data-bs-target="#exampleModalToggle" data-bs-toggle="modal"></a>
+        </center>
+    </div>
+    <script>
+
+        let myTodos = []
+        let dispDate = []
+        let todoIndex = 0
+        // if (localStorage = null){
+        //     myTodos = JSON.parse(localStorage.getItem("localTodos"))
+        // }
+        if (localStorage.localTodos && localStorage.localDate) {
+          myTodos = JSON.parse(localStorage.getItem("localTodos"))
+          dispDate = JSON.parse(localStorage.getItem("localDate"))
+        }
+            listAllTodos()
+
+        function addTodo() {
+                const now = new Date();
+            if (inputTodo.value == "") {
+           alert("Nothing to add ‼️")
+            }else {
+              let userData = {
+                title : inputTodo.value,
+                date : now.toLocaleString()
+              }
+                dispDate.push(`${userData.date}`)
+                myTodos.push (`${userData.title}`)
+                listAllTodos()
+            }
+        }
+        function listAllTodos() {
+            localStorage.setItem("localDate",JSON.stringify(dispDate))
+            localStorage.setItem("localTodos",JSON.stringify(myTodos))
+            dispTotal.innerHTML = myTodos.length;
+            const searchQuery = searchInput.value.toLowerCase();
+            disp.innerHTML = "";
+            // disp.innerHTML += "";
+            for  (let index = 0; index < myTodos.length; index++) {
+              if (myTodos[index].toLowerCase().includes(searchQuery)) {
+                disp.innerHTML += `
+                <div class="mb-2 py-2 ps-3" style="background-color: #7bff6133; border-radius:7px;">
+                  <span class="me-1 fs-5"><img src="Icons/016-contact form.png" alt="" width="30px"> ${myTodos[index]}</span>
+                  <span class="shadow" id=indexNo> 
+                      <button class="btn-danger shadow btn-sm btn ms- mb- me- p-0" onclick="delTodo(${index} )">
+                    <img src="Icons/multiply.svg" alt="" width="px">
+                  </button>
+                 
+                    </span> <br>
+                  <span id="dispDate" style="font-size:1em;" class="me-5 text-secondary">
+                    ${dispDate[index]}
+                    <button class="btn-success shadow btn-sm btn mb-2 p-0" onclick="setIndex(${index})">
+                      <a href="" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">
+                        <img src="Icons/pen-new-round-bold.svg" alt="" width="21px">
+                      </a>
+                    </button>
+                  </span>
+                </div> 
+                `
+                welcome.innerHTML = ""
+                inputTodo.value = ""
+              }
+            }
+            searchInput.textContent = `${disp.children.length} / ${myTodos.length}`;
+        }
+        searchInput.addEventListener("input", listAllTodos);
+       
+        function setIndex(ind){
+          todoIndex = ind
+        }
+        function delTodo(userIndex) {
+          let deleteResponse = confirm("Delete Permanently")
+          if (deleteResponse == true) {
+            myTodos.splice (userIndex,1);
+            dispDate.splice (userIndex,1);
+            listAllTodos()
+          } else {
+          }
+        }
+        function editTodo() {
+          if (editTodoInput.value == "") {
+            alert("Nothing to replace")
+          } else {
+            let userIndex = todoIndex
+            let replacement = editTodoInput.value;
+            myTodos.splice (userIndex,1,replacement)
+            listAllTodos()
+          }
+        }
+    </script>
+
+</body>
+</html>

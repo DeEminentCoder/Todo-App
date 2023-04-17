@@ -1,0 +1,125 @@
+*{
+    padding: 0%;
+    margin: 0;
+    box-sizing: border-box;
+    /* outline: 1px solid gold; */
+}
+
+body{
+  background-image: url(./Icons);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.notification {
+  /* background-color: #555; */
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+  /* padding: 15px 26px; */
+  position: relative;
+  display: inline-block;
+  border-radius: 2px;
+}
+
+.notification .badge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  padding: 4px 7px 4px 5px;
+  border-radius: 50%;
+  background-color: rgb(87, 65, 65);
+  color: white;
+}
+
+#title {
+position: fixed;
+background-color: #ffffff;
+z-index: 100;
+top: 0;
+}
+
+#searchInp {
+    width: 100%;
+    margin: 87px 0 0 0;
+    /* padding: 3px 10px; */
+    /* border-radius: 7px; */
+}
+form.example input[type=text] {
+    padding: 10px;
+    font-size: 17px;
+    border: 1px solid grey;
+    float: left;
+    width: 80%;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    background: #f1f1f1;
+  }
+  
+  form.example button {
+    float: left;
+    width: 20%;
+    border-left: none;
+    cursor: pointer;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
+  
+  form.example button:hover {
+    background-color: black !important;
+  }
+  
+  form.example::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+
+  #disp {
+    border-radius: 5%;
+    /* background-color: #7bff6133; */
+    text-align: left;
+    margin: 0 20px;
+  }
+  #welcome {
+    font-weight: 500;
+    font-size: 2.9em;
+    color: rgba(0, 0, 0, 0.11);
+  }
+
+  #indexNo button {
+    float: right;
+    text-align: center;
+    font-size: 0.6em;
+    margin-right: 9px;
+    /* background-color: #000000; */
+    border-radius: 100%;
+  }
+
+  .btn-success {
+    float: right;
+    margin-right: 9px;
+  }
+
+  .plus a{
+    background-image: url(./Icons/aa974836212db5e83b9e19c12d96b6ee.gif);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size:150px;
+    width: 70px;
+    height: 70px;
+    position: fixed;
+    left: 41%;
+    bottom: 2%;
+    z-index: 100;
+    border-radius: 100%;
+    transition: all 0.3s ease;
+    filter: drop-shadow(1px 1px 5px rgb(10, 1, 1));
+  }
+  
+  .plus a:hover {
+    background-size: 240px;
+    background-image: url(./Icons/5cd2c32f73b61f7392a842e3208be7e9.gif);
+  }
+  
