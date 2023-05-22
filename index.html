@@ -142,7 +142,7 @@
           todoIndex = ind
         }
         function delTodo(userIndex) {
-          let deleteResponse = confirm("Delete Permanently")
+          let deleteResponse = confirm("Delete Permanently?")
           if (deleteResponse == true) {
             myTodos.splice (userIndex,1);
             dispDate.splice (userIndex,1);
